@@ -1,0 +1,446 @@
+投稿を編集
+
+
+
+
+
+保存しました
+
+公開
+
+
+Windows10　ファイル履歴を使ってみる
+<style>
+p span{
+  display:block;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: initial;
+}
+
+.accordion-format {
+  text-align: initial;
+  display: none;
+  clear: both;
+  padding: 1em;
+  border: solid 1em green;
+}
+
+.box {
+  border: 2px solid #aaa;
+  padding: .5em 2em;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-size: .9em;
+}
+
+.okibox{
+  border: 2px solid #0094D6;
+  background: #FFF;
+}
+
+h6.okibox_header{
+  background: #0094D6;
+  color: #FFF;
+  margin: 0;
+  display:inline-block;
+  padding: .3em .5em;
+  border-radius: 10px 10px 0 0;
+}
+
+.okibox .okiinner{
+  padding: .5em;
+}
+
+.highlight {
+  padding: 7.2px;
+}
+
+.cui {
+  white-space: pre-wrap;       /* css-3 */
+  color: #e3e3e3;
+  background-color: #364549;
+  margin: 1.5em, -32px;
+  padding: 1em, 32px;
+  border-width: 2.25em .25em .25em .25em;
+  border-style: solid;
+  border-color: #dcdcdc;
+  box-sizing: border-box;
+}
+.cmd {
+  font-size: 16px;
+  line-height: 1.075;
+}
+.winpwsh {
+  font-family: ＭＳ ゴシック;
+  font-size: 14px;
+  line-height: 1.075;
+  line-break: anywhere;
+}
+.winpwsh-color {
+  background-color: #012456;
+  padding: 1px;
+}
+.errred {
+  color: red;
+  background-color: #000000;
+  display: inline;
+  border-bottom: solid 2px #000000;
+}
+
+.unuse {
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+</style>
+<style>
+/* .hosoku {
+  style="padding:1em;
+  border:solid 0.5em gray;
+  background-color:silver;
+} */
+.dotted-box {
+    padding: 0.5em 1em 0.5em;
+    margin: 2em 0;
+    background: #f0f7ff;
+    border: dashed 2px #5b8bd0;/*点線*/
+}
+.dotted-box p {
+    margin: 0; 
+    padding: 0;
+}
+/*--------------------------------------
+  インデックス付きボックス
+引用元：CSS｜タイトル付きボックスデザイン サンプル集
+https://cotodama.co/css_frame/
+--------------------------------------*/
+/*-----二重線ボックスここから-----*/
+.cotodamabox{
+  border: 5px double #0094D6;
+  position: relative;
+  margin-top: 1em;
+}
+.cotodamabox h6{
+  text-align: center;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: -1.9em;
+}
+.cotodamabox span{
+  padding: .5em .5em;
+  background: #FFF;
+  color: #0094D6;
+}
+.cotodamabox .inner{
+  padding: 1.2em .5em .5em;
+}
+/*-----二重線ボックスここまで-----*/
+/* CSSで作る！魅力的な引用デザインのサンプル30（blockquote）
+https://saruwakakun.com/html-css/reference/blockquote */
+blockquote {
+    position: relative;
+    padding: 30px 15px 8px 15px;
+    box-sizing: border-box;
+    font-style: italic;
+    background: #efefef;
+    color: #555;
+}
+blockquote:before{
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    content: "“";
+    font-family: sans-serif;
+    color: #cfcfcf;
+    font-size: 90px;
+    line-height: 1;
+}
+blockquote p {
+    padding: 0;
+    margin: 10px 0;
+    line-height: 1.7;
+}
+
+blockquote cite {
+    display: block;
+    text-align: right;
+    color: #888888;
+    font-size: 0.9em;
+}
+</style>
+ファイル履歴は、ライブラリ、アドレス帳、ドキュメントなどのユーザーフォルダに保存しているファイルを自動的にバックアップできる機能です。バックアップの対象を追加することも可能です。
+
+ファイルの紛失や破損など、もしものことがあった時に、ファイル履歴によって作成されたバックアップデータから、ファイルを復元することができます。
+
+「更新とセキュリティ」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image.png
+設定
+<p><span>「更新とセキュリティ」が表示されます。</span>
+<span>「バックアップ」をクリックし、「ファイル履歴を使用してバックアップ」欄の「ドライブの追加」をクリックします。</span></p>
+画像に alt 属性が指定されていません。ファイル名: image-1.png
+設定￥更新とセキュリティ￥バックアップ
+バックアップを保存するドライブを選択します。
+
+画像に alt 属性が指定されていません。ファイル名: image-2.png
+設定￥更新とセキュリティ￥バックアップ
+「ファイルのバックアップを自動的に実行」がオンの状態になっている。「その他のオプション」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-3.png
+設定￥更新とセキュリティ￥バックアップ
+<div class="hosoku" style="padding:1em;border:solid 0.5em gray;background-color:silver;">
+「ファイルのバックアップを自動的に実行」をオフにすると、ファイル履歴を使用したバックアップは行なわれません。
+
+画像に alt 属性が指定されていません。ファイル名: image-4.png
+設定￥更新とセキュリティ￥バックアップ
+「今すぐバックアップ」がグレーアウトされてクリックできないので、手動でバックアップを取ることもできません。
+
+画像に alt 属性が指定されていません。ファイル名: image-5.png
+設定￥更新とセキュリティ￥バックアップ￥バックアップオプション
+</div>
+まずは「バックアップ対象のフォルダー」をチェックしたいと思います。
+
+画像に alt 属性が指定されていません。ファイル名: image-6.png
+設定￥更新とセキュリティ￥バックアップ￥バックアップオプション
+「バックアップ対象のフォルダー」を見てみます。
+
+画像に alt 属性が指定されていません。ファイル名: image-7.png
+設定￥更新とセキュリティ￥バックアップ￥バックアップオプション
+ファイル履歴に残したいデータを選別せずにバックアップを実行すると、バックアップ先のドライブが散らかってしまいそうです。
+
+「ファイル履歴」の運用・管理を任される身としては、構成をリセットする必要に迫られる状況も想定しておきたいところです。こちらのリンク記事を参考に、構成を維持したまま「ファイル履歴」をリセットする方法を再現できるかどうか試してみます。
+
+[blogcard url="https://superuser.com/questions/1231658/win10-how-to-reset-file-history-while-keeping-configuration"]
+現在の構成をバックアップします。
+
+C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory\Configuration\Config1.xml
+
+Config1.xmlとConfig2.xmlは同一です。気になる方はコンペアを使って不一致がないことを確認してください。
+
+<pre class="cui winpwsh-color"><code class="winpwsh"><div>PS C:\Users\user&gt;　$path1 = "C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory\Configuration\Config1.xml"
+PS C:\Users\me&gt; $path2 = "C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory\Configuration\Config2.xml"
+PS C:\Users\me&gt; Compare-Object $path1 $path2
+
+InputObject                                                                          SideIndicator
+-----------                                                                          -------------
+C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory\Configuration\Config2.xml =>
+C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory\Configuration\Config1.xml <=
+PS C:\Users\user&gt;</div></code></pre>
+「ファイルのバックアップを自動的に実行」をオフにして「その他のオプション」を開きます。
+
+画像に alt 属性が指定されていません。ファイル名: image-4.png
+設定￥更新とセキュリティ￥バックアップ
+「ドライブの使用を停止」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-8.png
+設定￥更新とセキュリティ￥バックアップ￥バックアップオプション
+エラーが発生してしまいました。左上の前の画面に戻るボタンを押してみます。
+
+画像に alt 属性が指定されていません。ファイル名: image-9.png
+設定￥更新とセキュリティ￥バックアップ￥バックアップオプション
+さきほどはエラーになったものの、ドライブの解除は成功したようです。
+
+画像に alt 属性が指定されていません。ファイル名: image-10.png
+設定￥更新とセキュリティ￥バックアップ
+「C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory\」の配下にあるすべてのファイルを削除します。
+
+ファイルを削除した状態を確認する場合は、treeコマンドを使ってください。
+
+<pre class="cui cmd"><code>Microsoft Windows [Version 10.0.19045.2251]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\me&gt;tree /f C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory
+フォルダー パスの一覧
+ボリューム シリアル番号は 00000009 64F7:BB38 です
+C:\USERS\ME\APPDATA\LOCAL\MICROSOFT\WINDOWS\FILEHISTORY
+├─Configuration
+└─Data
+
+C:\Users\me&gt;</code></pre>
+「ファイル名を指定して実行」から「control panel」と入力し「OK」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-11.png
+Windowsキー＋R
+コントロールパネルが開きます。「ファイル履歴でファイルのバックアップ コピーを保存」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-12.png
+コントロール パネル
+「オンにする」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-13.png
+コントロール パネル￥システムとセキュリティ￥ファイル履歴
+<div class="dotted-box"><div style="padding:0.5em;margin:0.5em 0 0.5em;border:solid 1px black;background-color:lightyellow;"><i class="fa-solid fa-circle-info" style="color: #2367f3;"></i>ファイル履歴で、ネットワーク上の場所、または NTFS ファイル システムを使用していないドライブ上に、暗号化ファイル システムで暗号化されているファイルが見つかりました。これらのファイルはバックアップされません。</div><p>このメッセージは、ファイル履歴の対象フォルダーにファイルを置いてもバックアップできない可能性のあることをファイル履歴をオンにする前に注意喚起してくれています。</p><div style="margin-top:0.5em;">
+[blogcard url="https://yamanxworld.blogspot.com/2014/02/windows-81.html"]</div></div>
+﻿
+
+「ファイル履歴が初回のファイルコピーを保存しています」が表示されたら、すぐに「停止」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-14.png
+コントロール パネル￥システムとセキュリティ￥ファイル履歴
+<div class="hosoku" style="padding:1em;border:solid 0.5em gray;background-color:silver;">
+当方の環境では「オンにする」をクリックしたタイミングで「ファイル履歴の設定にエラーが見つかりました」のトースト通知が連続して出力されるようになりました。
+
+画像に alt 属性が指定されていません。ファイル名: image-18.png
+セキュリティとメンテナンス
+又、ここで「停止」をクリックすると「ファイル履歴サービスにアクセスできません」というエラーが表示されました。
+
+画像に alt 属性が指定されていません。ファイル名: image-16.png
+このメッセージはファイル履歴サービスが実行されていないことを意味します。このエラーを解決するには次の手順を行ないます。
+
+<!-- 表示部分 -->
+<span onclick="obj=document.getElementById('open1').style; obj.display=
+(obj.display=='none')?'block':'none';" class="left">
+<p style="cursor:pointer;">▼ 方法１．ファイル履歴サービスを開始する（クリックして中身を見る）</p>
+</span>
+<!-- 折り畳まれる部分 -->
+<div id="open1" class="accordion-format">
+「ファイル名を指定して実行」から「services.msc」と入力し「OK」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-17.png
+Windowsキー＋R
+サービスが開きます。「File History Service」を見つけてダブルクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-19.png
+サービス
+「スタートアップの種類」を「自動」に変更して「開始」ボタンをクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-20.png
+File History Serviceのプロパティ
+<p class="dotted-box">「自動(遅延開始)」は、Windows10が起動した時に自動で開始されるサービスがすべて起動した後に、サービスが開始される設定となります。</p>
+「適用」をクリック、続けて「OK」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-21.png
+File History Serviceのプロパティ
+画像に alt 属性が指定されていません。ファイル名: image-22.png
+サービス
+</div><!--id="open1"-->
+<!-- 表示部分 -->
+<span onclick="obj=document.getElementById('open2').style; obj.display=
+(obj.display=='none')?'block':'none';" class="left">
+<p style="cursor:pointer;">▼ 方法２．システムの保護を無効にしてから有効に戻す（クリックして中身を見る）</p>
+</span>
+<!-- 折り畳まれる部分 -->
+<div id="open2" class="accordion-format">
+設定を開きます。
+
+画像に alt 属性が指定されていません。ファイル名: image-26.png
+設定
+「システム」⇒「詳細情報」の順に移動します。「システムの保護」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-25.png
+設定￥システム￥詳細情報
+「利用できるドライブ」を選択し「構成」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-27.png
+システムのプロパティ￥システムの保護
+「システムの保護を無効にする」をクリックし「OK」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-28.png
+システム保護対象
+「はい」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-29.png
+その後「システムの保護を有効にする」をクリックし「OK」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-30.png
+システム保護対象
+</div><!--id="open2"-->
+ネットの記事を参考に、上記の方法１、方法２を行なってみましたが、エラーを解消することができませんでした。
+
+ほかにできることもないので「C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory\」の配下にあるすべてのファイルをバックアップから復元してみました。
+
+ファイルを復元した状態を確認する場合は、treeコマンドを使ってください。
+
+<pre class="cui cmd"><code>Microsoft Windows [Version 10.0.19045.2251]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\me&gt;tree /f C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory
+フォルダー パスの一覧
+ボリューム シリアル番号は 00000009 64F7:BB38 です
+C:\USERS\ME\APPDATA\LOCAL\MICROSOFT\WINDOWS\FILEHISTORY
+├─Configuration
+│      Catalog1.edb
+│      Config1.xml
+│      Config2.xml
+│
+└─Data
+
+C:\Users\me&gt;</code></pre>
+「オンにする」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-31.png
+コントロール パネル￥システムとセキュリティ￥ファイル履歴
+なんと「ファイル履歴の設定にエラーが見つかりました」のトースト通知や「ファイル履歴のエラー」が解消されたようです。一旦「停止」をクリックします。
+
+画像に alt 属性が指定されていません。ファイル名: image-34.png
+コントロール パネル￥システムとセキュリティ￥ファイル履歴
+現在のFileHistoryの状態をtreeコマンドで確認してみます。
+
+<pre class="cui cmd"><code>Microsoft Windows [Version 10.0.19045.2251]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\me&gt;tree /f C:\Users\me\AppData\Local\Microsoft\Windows\FileHistory
+フォルダー パスの一覧
+ボリューム シリアル番号は 00000009 64F7:BB38 です
+C:\USERS\ME\APPDATA\LOCAL\MICROSOFT\WINDOWS\FILEHISTORY
+├─Configuration
+│      Catalog1.edb
+│      Catalog1.jfm
+│      Catalog2.edb
+│      Config1.xml
+│      Config2.xml
+│
+└─Data
+
+C:\Users\me&gt;</code></pre>
+</div>
+ファイル履歴が停止しているところです。
+
+画像に alt 属性が指定されていません。ファイル名: image-32.png
+コントロール パネル￥システムとセキュリティ￥ファイル履歴
+停止していても、定期的に自動でバックアップが実行されています。
+
+画像に alt 属性が指定されていません。ファイル名: image-35.png
+コントロール パネル￥システムとセキュリティ￥ファイル履歴
+たとえばバックアップ先をE:ドライブとするとユーザーデータのファイル履歴は、e:\FileHistory\me\me-pc\Data\C\Users に格納されています。
+
+画像に alt 属性が指定されていません。ファイル名: image-37-wpp1682512337555.png
+バックアップ対象のフォルダー
+「ファイル履歴」の機能を有効にすると、バックアップが定期的に自動で実行されることはわかりました。
+
+次に疑問が沸くのは、必要とするデータのファイル履歴がはたして残るのか、また復元できるのかです。
+
+<div class="cotodamabox">
+  <h6><span>「バックアップ対象のフォルダー」はどうやって決まるのか</span></h6>
+  <div class="inner">
+    <ul>
+      <li>何を根拠に「バックアップ対象のフォルダー」の既定値が存在するのか</li>
+      <li>目的のデータを「バックアップ対象のフォルダー」に追加するにはどうすればいいのか</li>
+    </ul>
+  </div>
+</div>
+ライブラリ機能が「バックアップ対象のフォルダー」に大きく関わっているようです。
+
+ライブラリとは・・・
+
+ライブラリはにあるライブラリをクリックすると表示できます。
+
+エクスプローラのオプション設定から、ナビゲーションペインにライブラリを表示させることも可能です。
+
+標準では
+
+﻿
+
+
+ドキュメント設定を開く
+公開パネルを開く
+投稿

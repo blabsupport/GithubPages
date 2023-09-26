@@ -1,0 +1,382 @@
+投稿を編集
+
+
+
+
+
+保存しました
+
+公開
+
+
+涙！git は便利だが、タイムスタンプがカオスに陥ることを知らなかった！
+<style>
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: initial;
+}
+
+.accordion-format {
+  text-align: initial;
+  display: none;
+  clear: both;
+  padding: 1em;
+  border: solid 1em green;
+}
+
+.box {
+  border: 2px solid #aaa;
+  padding: .5em 2em;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-size: .9em;
+}
+/*--------------------------------------
+  インデックス付きボックス
+引用元：CSS｜タイトル付きボックスデザイン サンプル集
+https://cotodama.co/css_frame/
+--------------------------------------*/
+.okibox{
+  box-sizing: border-box;
+  padding: .35em;
+  border: 2px solid #0094D6;
+  background: #FFF;
+  font-size: .9em;
+  text-align: justify;
+}
+
+h6.okibox_header{
+  background: #0094D6;
+  color: #FFF;
+  margin: 0;
+  display:inline-block;
+  padding: .3em .5em;
+  border-radius: 10px 10px 0 0;
+  font-size: .8em;
+}
+
+.highlight {
+  padding: 7.2px;
+}
+
+.cmd {
+  position: relative; /* 子要素の起点を指定 */
+  white-space: pre-wrap; /* css-3 */
+  color: #e3e3e3;
+  background-color: #364549;
+  margin: 1.5em, -32px;
+  padding: 1em, 32px;
+  border-width: 2.25em .25em .25em .25em;
+  border-style: solid;
+  border-color: #dcdcdc;
+  font-size: .8em;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.title_area {
+  line-height: 2.25em;
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute; /* 要素の配置方法を指定 */
+  top: -2.25em;
+  right: 0;
+  left: 0;
+  color: black;
+}
+
+.gitbash {
+  font-family: 'Lucida Console', sans-serif;
+}
+.wsl {
+  font-family: 'Cascadia Mono', sans-serif;
+}
+.wsl-color {
+  background-color: #300a24;
+}
+</style>
+<style>
+/* 引用 */
+blockquote {
+    position: relative;
+    padding: 30px 15px 8px 15px;
+    box-sizing: border-box;
+    font-style: italic;
+    background: #efefef;
+    color: #555;
+}
+blockquote::before{
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    content: "“";
+    font-family: sans-serif;
+    color: #cfcfcf;
+    font-size: 333%;
+    line-height: 1;
+}
+blockquote p {
+    padding: 0;
+    margin: 10px 0;
+    line-height: 1.7;
+}
+
+blockquote cite {
+    display: block;
+    text-align: right;
+    color: #888888;
+    font-size: 0.9em;
+}
+</style>
+<!--
+特殊文字をエスケープせずに HTML のソースコードをそのまま表示させる-->
+<script>
+	document.querySelectorAll('pre > code').forEach(function (elem) {
+		elem.textContent = elem.innerHTML.trim();
+	});
+</script>
+<pre class="cmd"><div class="title_area center gitbash">Git Bash</div><code class="gitbash">タグを削除する
+$git tag -d タグ名
+ブランチの名前を変更する
+$git branch -m 古いブランチ名 新しいブランチ名
+現在居るブランチの名前を変更する
+$git branch -m 新しいブランチ名</code></pre>
+立場によっては気になることもないのかもしれない。git 管理下ではファイルの作成日時、更新日付を維持できない。というか、できなくて当然らしい。
+
+git のコマンドを使って作成日付、更新日付を表示させることが可能なのかもしれないが、それは置いといて、Windows の標準機能だけで確認したり、日時で並び替えしたりすることを可能にしたい。
+
+チェックアウトやクローンが行なわれる都度、作成日時、更新日時が最新に書き換わるのは git の設計思想によるもの。こちらとしてはデメリットだが、git にとっては仕様通りに動いているだけ。どこかの質問サイトに投稿した人もいるようだが、対応の見込みはなさそう。
+
+こちらがあれこれストレスを抱えるものではなく、作成日時、更新日時を維持できるように自衛しようと思い至った。
+
+下記の記事を参考にしながら、方法を探ってみる。
+
+Gitがファイルの日付を管理しない問題を何とかしたい(1): なひたふJTAG日記
+Gitのチェックアウトで更新日時を復元してみるテスト : ほげぴよ物置
+先に結論を箇条書きにしておく。
+
+GitBash の機能だと更新日時の操作は可能だが、作成日時についてはどうすることもできない。そもそも Linux にはファイルの作成日時が考慮されていない。
+Linux でも特定のファイルシステムに限定されるが CriationTime がサポートされている。
+githook という仕組みがあるそう。
+
+チェックアウトの都度、作成日時、更新日時を復元したい。
+チェックアウト、コミットが行われる都度、先にファイルの作成日時、更新日時を XML に書き出す。XML に書き出された作成日時、更新日時は、それぞれのブランチごとの内容になる。
+ブランチを移った後、そのブランチにある XML の内容から、ファイルの作成日時、更新日時を復元させる。
+PowerShell を使って、Windows の機能から作成日時、更新日時を復元させる。
+<div class="center">
+<!-- 表示部分 -->
+<span onclick="obj=document.getElementById('open').style; obj.display=
+(obj.display=='none')?'block':'none';" class="left">
+<p style="cursor:pointer;">▼ 今まで知らなかった「Linux には作成日時という概念がない」ということ（クリックして一部始終を見る）</p>
+</span>
+<!-- 折り畳まれる部分 -->
+<div id="open" class="accordion-format">
+<h5>GitBash で作成日時を取得することができないかどうか探していたら、できない理由ばかり収集する羽目になった。</h5>
+<p>GitBash に perl がインストールされているか確認。バージョン情報が表示された場合、すでにインストールされている。</p>
+<pre class="cmd"><div class="title_area center gitbash">Git Bash</div><code class="gitbash">blabs@blabs-pc MINGW64 ~/Documents/GitHub/wp (v1fix)
+$ uname -r
+3.1.7-340.x86_64
+$ perl -v
+This is perl 5, version 32, subversion 0 (v5.32.0) built for x86_64-msys-thread-multi
+Copyright 1987-2020, Larry Wall
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5 source kit.
+Complete documentation for Perl, including FAQ lists, should be found on
+this system using "man perl" or "perldoc perl".  If you have access to the
+Internet, point your browser at http://www.perl.org/, the Perl Home Page.
+$ # use POSIX; は POSIX モジュールを読み込む # UNIX 系標準仕様の関数を、Perlでも使えるようにする
+$ # perl コマンドオプション
+$ # l：入力末尾の改行を取り除く。表示制御を主目的として、データ加工では使わないらしい
+$ # n：入力を 1 行ずつ while で処理する
+$ # w：デバッグ
+$ # e：perl をワンライナーで使用するなら必須
+$ # .演算子：複数の文字列を結合する
+$ echo tmp2 | perl -lnwe 'use POSIX;@i=stat($_);print "$_ $i[7] ".POSIX::strftime("%Y/%m/%d %H:%M:%S",localtime($i[9]));'
+tmp2 7 2022/05/25 08:43:43
+$ # 配列を要素ごとに列挙する
+$ # stat 関数から作成日付を導き出すことはできない
+$ echo tmp2 | perl -lnwe 'use POSIX;@i=stat($_);$cnt = 0;foreach my $my (@i) {print "[".sprintf("%02d",$cnt)."]".$my;$cnt++;};'
+[00]1693956920
+[01]336644072146369163
+[02]33188
+[03]1
+[04]197609
+[05]197609
+[06]0
+[07]7
+[08]1654945128
+[09]1653435823
+[10]1653435823
+[11]65536
+[12]1
+$</code></pre>
+<pre class="cmd wsl-color"><div class="title_area center wsl">WSL</div><code class="wsl">Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.10.102.1-microsoft-standard-WSL2 x86_64)
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+  System information as of Fri Jul  1 06:00:52 JST 2022
+  System load:  0.0                Processes:             8
+  Usage of /:   0.5% of 250.98GB   Users logged in:       0
+  Memory usage: 0%                 IPv4 address for eth0: 172.25.213.201
+  Swap usage:   0%
+0 updates can be applied immediately.
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+This message is shown once a day. To disable it please create the
+/home/blabsupp/.hushlogin file.
+blabsupp@blabs-pc:~$ perl -v
+This is perl 5, version 30, subversion 0 (v5.30.0) built for x86_64-linux-gnu-thread-multi
+(with 50 registered patches, see perl -V for more detail)
+Copyright 1987-2019, Larry Wall
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5 source kit.
+Complete documentation for Perl, including FAQ lists, should be found on
+this system using "man perl" or "perldoc perl".  If you have access to the
+Internet, point your browser at http://www.perl.org/, the Perl Home Page.
+blabsupp@blabs-pc:~$ echo /mnt/c/Users/blabs/Documents/GitHub/zzz--closedLocker/tmp2 | perl -lnwe 'use P
+OSIX;@i=stat($_);$cnt = 0;foreach my $my (@i) {print "[".sprintf("%02d",$cnt)."]".$my;$cnt++;};'
+[00]47
+[01]336644072146369165
+[02]33279
+[03]1
+[04]1000
+[05]1000
+[06]0
+[07]7
+[08]1656623218
+[09]1653435823
+[10]1653435823
+[11]512
+[12]0
+blabsupp@blabs-pc:~$ stat /mnt/c/Users/blabs/Documents/GitHub/zzz--closedLocker/tmp2
+  File: /mnt/c/Users/blabs/Documents/GitHub/zzz--closedLocker/tmp2
+  Size: 7               Blocks: 0          IO Block: 512    regular file
+Device: 2fh/47d Inode: 336644072146369165  Links: 1
+Access: (0777/-rwxrwxrwx)  Uid: ( 1000/blabsupp)   Gid: ( 1000/blabsupp)
+Access: 2022-06-12 07:12:09.206142700 +0900
+Modify: 2022-05-25 08:43:43.243834300 +0900
+Change: 2022-05-25 08:43:43.243702500 +0900
+ Birth: -
+blabsupp@blabs-pc:~$</code></pre>
+<blockquote><p>UNIX 文化には「ファイルの作成日時」という概念がないので、UNIX 由来なスクリプト言語を使って「Windows のファイルの作成日時」を変更する公式の手法はない。</p>
+<cite><a href="http://tech.nitoyon.com/ja/blog/2013/12/09/setctime/" data-type="URL" data-id="http://tech.nitoyon.com/ja/blog/2013/12/09/setctime/" target="_blank" rel="noreferrer noopener">Windows でファイル作成日時をスクリプト言語から操作するために setctime.exe を作った - てっく煮ブログ</a></cite></blockquote>
+<p>驚愕！Linux ではファイル作成時刻が存在しないらしい！</p>
+<ul><li>atime (AccessTime)</li><li>mtime (ModifiedTime)</li><li>ctime (ChangeTime) </li><li>Birth (Birthday＝作成日付) </li></ul>
+<p>Birth については、ファイルシステムが対応している必要がある。</p>
+<p>デスクトップ環境が Linux であることが前提ならば、そういうファイルシステムを選択することで改善に向けたシナリオに舵を切ることも可能かもしれないが、少なくともこちらが身を置くデスクトップ環境はそうではない。</p>
+<p>ntfs-3g がインストールされていたからといって CreationTime のアクセスが可能になるわけではない。</p>
+<pre class="cmd wsl-color"><div class="title_area center wsl">WSL</div><code class="wsl">blabsupp@blabs-pc:~
+$ stat /mnt/c/Users/blabs/Documents/GitHub/zzz--closedLocker/tmp2
+  File: /mnt/c/Users/blabs/Documents/GitHub/zzz--closedLocker/tmp2
+  Size: 7               Blocks: 0          IO Block: 512    regular file
+Device: 2fh/47d Inode: 336644072146369165  Links: 1
+Access: (0777/-rwxrwxrwx)  Uid: ( 1000/blabsupp)   Gid: ( 1000/blabsupp)
+Access: 2022-06-12 07:12:09.206142700 +0900
+Modify: 2022-05-25 08:43:43.243834300 +0900
+Change: 2022-05-25 08:43:43.243702500 +0900
+ Birth: -
+$ apt list --installed show ntfs-3g -a
+Listing... Done
+ntfs-3g/focal-updates,focal-security,now 1:2017.3.23AR.3-3ubuntu1.1 amd64 [installed,automatic]
+ntfs-3g/focal 1:2017.3.23AR.3-3ubuntu1 amd64
+$</code></pre>
+<p>btime (BirthTime) の対応状況（英語圏）。実装の予定も見込めない様子。</p>
+<p><a href="https://unix.stackexchange.com/questions/650780/how-should-btime-be-specified" data-type="URL" data-id="https://unix.stackexchange.com/questions/650780/how-should-btime-be-specified" target="_blank" rel="noreferrer noopener">files - How should btime be specified? - Unix &amp; Linux Stack Exchange</a></p>
+<p>ファイルの拡張属性を参照するには「attr」パッケージをインストールする必要がある。</p>
+<pre class="cmd wsl-color"><div class="title_area center wsl">WSL</div><code class="wsl">To run a command as administrator (user "root"), use "sudo <command></command>".
+See "man sudo_root" for details.
+blabsupp@blabs-pc:~$ sudo apt install attr
+[sudo] password for blabsupp:
+-- (略) --
+$ apt list --installed show attr -a
+Listing... Done
+attr/focal,now 1:2.4.48-5 amd64 [installed]
+$</code></pre>
+<p>ext4 パーティションのファイルは crtime (CriationTime) が表示された。</p>
+<pre class="cmd wsl-color"><div class="title_area center wsl">WSL</div><code class="wsl">To run a command as administrator (user "root"), use "sudo <command></command>".
+See "man sudo_root" for details.
+$ sudo parted -l
+[sudo] password for blabsupp:
+Model: Msft Virtual Disk (scsi)
+Disk /dev/sda: 275GB
+Sector size (logical/physical): 512B/4096B
+Partition Table: loop
+Disk Flags:
+Number  Start  End    Size   File system  Flags
+ 1      0.00B  275GB  275GB  ext4
+Model: Msft Virtual Disk (scsi)
+Disk /dev/sdb: 275GB
+Sector size (logical/physical): 512B/4096B
+Partition Table: loop
+Disk Flags:
+Number  Start  End    Size   File system  Flags
+ 1      0.00B  275GB  275GB  ext4
+$ df -T
+Filesystem     Type      1K-blocks       Used  Available Use% Mounted on
+/dev/sdb       ext4      263174212    1315252  248420804   1% /
+tmpfs          tmpfs       9690644          0    9690644   0% /mnt/wsl
+tools          9p        499491768  305273828  194217940  62% /init
+none           devtmpfs    9688212          0    9688212   0% /dev
+none           tmpfs       9690644          8    9690636   1% /run
+none           tmpfs       9690644          0    9690644   0% /run/lock
+none           tmpfs       9690644          0    9690644   0% /run/shm
+none           tmpfs       9690644          0    9690644   0% /run/user
+tmpfs          tmpfs       9690644          0    9690644   0% /sys/fs/cgroup
+drivers        9p        499491768  305273828  194217940  62% /usr/lib/wsl/drivers
+lib            9p        499491768  305273828  194217940  62% /usr/lib/wsl/lib
+C:\            9p        499491768  305273828  194217940  62% /mnt/c
+$ ls -i hoge
+41132 hoge
+$ # stat 関数には Inode 値を山括弧で囲んで渡す
+$ sudo debugfs -R 'stat &lt;41132&gt;' /dev/sdb
+debugfs 1.45.5 (07-Jan-2020)
+Inode: 41132   Type: regular    Mode:  0755   Flags: 0x80000
+Generation: 1873162203    Version: 0x00000000:00000001
+User:  1000   Group:  1000   Project:     0   Size: 10
+File ACL: 0
+Links: 1   Blockcount: 8
+Fragment:  Address: 0    Number: 0    Size: 0
+ ctime: 0x62a5442f:61a39e20 -- Sun Jun 12 10:41:03 2022
+ atime: 0x62a54452:49cc1a20 -- Sun Jun 12 10:41:38 2022
+ mtime: 0x62a5442f:61a39e20 -- Sun Jun 12 10:41:03 2022
+crtime: 0x62a543c3:3de05820 -- Sun Jun 12 10:39:15 2022
+Size of extra inode fields: 32
+Inode checksum: 0x2bd89040
+EXTENTS:
+(0):1064960
+(END)
+$</code></pre>
+<p>ntfs パーティションのファイルについては crtime 自体がそもそも表示されなかった。</p>
+<pre class="cmd wsl-color"><div class="title_area center wsl">WSL</div><code class="wsl">To run a command as administrator (user "root"), use "sudo <command></command>".
+See "man sudo_root" for details.
+blabsupp@blabs-pc:~$ ls -i /mnt/c/Users/blabs/Documents/GitHub/zzz--closedLocker/tmp2
+336644072146369165 /mnt/c/Users/blabs/Documents/GitHub/zzz--closedLocker/tmp2
+$ sudo debugfs -R 'stat &lt;336644072146369165&gt;' /dev/sda
+[sudo] password for blabsupp:
+debugfs 1.45.5 (07-Jan-2020)
+Inode: 424589   Type: bad type    Mode:  0000   Flags: 0x0
+Generation: 0    Version: 0x00000000
+User:     0   Group:     0   Size: 0
+File ACL: 0
+Links: 0   Blockcount: 0
+Fragment:  Address: 0    Number: 0    Size: 0
+ctime: 0x00000000 -- Thu Jan  1 09:00:00 1970
+atime: 0x00000000 -- Thu Jan  1 09:00:00 1970
+mtime: 0x00000000 -- Thu Jan  1 09:00:00 1970
+Size of extra inode fields: 0
+Inode checksum: 0x00000000
+BLOCKS:
+(END)
+$</code></pre>
+<p><a href="https://coffeekemuri.blogspot.com/2017/11/ntfs.html" data-type="URL" data-id="https://coffeekemuri.blogspot.com/2017/11/ntfs.html" target="_blank" rel="noreferrer noopener">【デジタルフォレンジック】タイムスタンプの改ざんを見破る方法（NTFS&amp;ext4想定）|コーヒースモーク</a></p>
+</div></div>
+﻿
+
+
+ドキュメント設定を開く
+公開パネルを開く
+投稿
