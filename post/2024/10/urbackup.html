@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>urBackup</title>
+    <link rel="stylesheet" href="css/mycss.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+
+<body>
+  [バックアップ] urBackup を使ってみる
+  <br />🐶　バックアップソフトの選定候補として sota Backup, BunBackup 以外にも選択肢がほしい。
+  
+  <br />😃　できれば世代管理あり、エラースキップに対応しているソフトがいいですよね。
+  
+  <br /><div class="okibox">BunBackup の増分バックアップが、思いのほか時間がかかってしまう。結局、ファイル個体ごとに対象かどうかチェックが入るから仕方がない。とはいえ、時間を短縮したいシナリオは突発で振ってくるので無視できない。</div>
+  
+  <br />🐶　ArcServe には有償版、トライアル版、無償版があるみたいな。今回は Windows Server 2022 IOT が対象なのだが、無償版はクライアント OS 限定みたいだし。
+  
+  <br />🐶　ChatGpt に聞いてみよう。
+  
+  <div class="kajoh-title">urBackup
+    <div class="potimark">対応OS: Windows Server、Linux</div>
+    <div class="potimark">特徴: ファイルとディスクイメージのバックアップが可能で、簡単に使えるWebベースのインターフェースを提供しています。物理サーバーとクライアントOSの両方をサポートしており、差分バックアップや増分バックアップも可能です。</div>
+    <div class="potimark">制限: GUIやサポートにおいて有償版ほどの高度な機能はありませんが、基本的なバックアップには十分。</div>
+  </div>
+  
+  <br />Windows10のサインイン画面に特定のユーザーを表示させない方法 | 4thsight.xyz
+  myUserName を非表示にしたいときは、以下のコマンドを実行します。
+  
+  <div class="highlight"><pre class="cmd"><code>C:\Windows\system32&gt;reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /v myUserName /t REG_DWORD /d 0 /f
+  この操作を正しく終了しました。
+  
+  C:\Windows\system32&gt;</code></pre></div>
+  操作は以上となります。
+  この時点で、すでにアカウント設定の画面から表示されなくなりました。次回サインイン時から、サインイン画面に表示されなくなります。
+  
+  尚、非表示にしているユーザーを表示するように戻したいときは、以下のコマンドを実行します。
+  
+  <div class="highlight"><pre class="cmd"><code>C:\Windows\system32&gt;reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /v myUserName /f
+  
+  C:\Windows\system32&gt;</code></pre></div>
+  補足
+  プロファイルフォルダは、最初にサインインした時にディスク上に書き込まれます。前述のレジストリコマンドを打って、サインイン画面に表示されなくなっても、プロファイルフォルダの表示は残ります。
+  
+  <div class="highlight"><pre class="cmd"><code>C:\Windows\System32&gt;net user myUserName
+  ユーザー名                           myUserName
+  フル ネーム                          myFullName
+  コメント                             
+  ユーザーのコメント
+  国/地域番号                          000 (システム既定)
+  アカウント有効                       Yes
+  アカウントの期限                     無期限
+  
+  最終パスワード変更日時               2021/10/05 14:18:39
+  パスワード有効期間                   無期限
+  パスワード次回変更可能日時           2021/10/05 14:18:39
+  パスワードあり                       Yes
+  ユーザーによるパスワード変更可能     Yes
+  
+  ログオン可能なワークステーション     すべて
+  ログオン スクリプト
+  ユーザー プロファイル
+  ホーム ディレクトリ
+  最終ログオン日時                     2022/04/20 16:31:23
+  
+  ログオン可能時間                     すべて
+  
+  所属しているローカル グループ        *Administrators
+                                       *Users
+  所属しているグローバル グループ      *なし
+  コマンドは正常に終了しました。
+  
+  C:\Windows\System32&amp;gh;</code></pre></div>
+  ﻿
+  
+  
+  ドキュメント設定を開く
+  公開パネルを開く
+  投稿
+</body>
