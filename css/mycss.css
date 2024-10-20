@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
 .box {
-  border: 2px solid #aaa;
-  padding: .5em 2em;
-  border-radius: 15px;
-  box-sizing: border-box;
-  font-size: .9em;
+    border: 2px solid #aaa;
+    padding: .5em 2em;
+    border-radius: 15px;
+    box-sizing: border-box;
+    font-size: .9em;
 }
 /*--------------------------------------
   インデックス付きボックス
@@ -13,44 +13,159 @@
 https://cotodama.co/css_frame/
 --------------------------------------*/
 .okibox{
-  border: 2px solid #0094D6;
-  background: #FFF;
+    border: 2px solid #0094D6;
+    background: #FFF;
 }
 
 h6.okibox_header{
-  background: #0094D6;
-  color: #FFF;
-  margin: 0;
-  display:inline-block;
-  padding: .3em .5em;
-  border-radius: 10px 10px 0 0;
+    background: #0094D6;
+    color: #FFF;
+    margin: 0;
+    display:inline-block;
+    padding: .3em .5em;
+    border-radius: 10px 10px 0 0;
 }
 
 .okibox .okiinner{
-  padding: .5em;
+    padding: .5em;
 }
 
 .highlight {
-  padding: 7.2px;
+    padding: 7.2px;
 }
 
 .cmd {
-  white-space: pre-wrap;       /* css-3 */
-  color: #e3e3e3;
-  background-color: #364549;
-  margin: 1.5em, -32px;
-  padding: 1em, 32px;
-  border-width: 2.25em .25em .25em .25em;
-  border-style: solid;
-  border-color: #dcdcdc;
-  font-size: .9em;
-  box-sizing: border-box;
-  word-break: break-all;
+    white-space: pre-wrap;       /* css-3 */
+    color: #e3e3e3;
+    background-color: #364549;
+    margin: 1.5em, -32px;
+    padding: 1em, 32px;
+    border-width: 2.25em .25em .25em .25em;
+    border-style: solid;
+    border-color: #dcdcdc;
+    font-size: .9em;
+    box-sizing: border-box;
+    word-break: break-all;
 }
 
 .unuse {
- white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
- white-space: -pre-wrap;      /* Opera 4-6 */
- white-space: -o-pre-wrap;    /* Opera 7 */
- word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
+/*
+.div-entry {
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+}
+
+.div-entry > div {
+    margin-left: 20px;
+}
+*/
+/* 箇条書きのポチ印 */
+.potimark::before {
+    content: '•';
+    color: #555;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* テーブル */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse; /* ボーダーを重ねない */
+    padding-bottom: 15px;
+}
+
+.styled-table td {
+    border: 1px solid #dddddd; /* ボーダー線のスタイル */
+    padding: 8px; /* 内側の余白 */
+}
+
+.styled-table tr td:first-child {
+    background-color: lightsteelblue; /* 最初のtdの背景色 */
+}
+.styled-table tr td:nth-child(n+2) {
+    background-color: #ffffff; /* 2列目以降の背景色を白に設定 */
+}
+
+.styled-tr-color tr:nth-child(even) {
+    background-color: #f2f2f2; /* 偶数行の背景色 */
+}
+
+.table-container {
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+}
+/* 吹き出し */
+.chat-container {
+    display: flex; /* アイコンと吹き出しを横に並べる */
+    align-items: flex-start; /* アイコンと吹き出しの上部を揃える */
+    margin: 20px 34px 20px 34px; /* コンテナ周囲の余白 */
+}
+
+.chat-icon {
+    font-size: 36px; /* アイコンのサイズ */
+    margin: 25px 10px; /* アイコンと吹き出しの間の余白 */
+}
+
+.chat-bubble {
+    position: relative; 
+    background-color: #f0f0f0; /* 吹き出しの背景色 */
+    border-radius: 10px; /* 角の丸み */
+    padding: 15px 20px 15px 20px; /* 吹き出し内の余白 */
+    max-width: 400px; /* 吹き出しの最大幅 */
+    border-radius: 35px;
+    left: 30px;
+}
+
+.chat-bubble::after {
+    content: "この内容は要約されたものです。"; /* 要約のテキスト */
+    display: block; /* ブロック要素として表示 */
+    font-size: 0.8em; /* フォントサイズを下げる */
+    color: #666; /* 目立たない色 */
+    margin-top: 5px; /* 吹き出し内容と要約の間に余白を追加 */
+    font-style: italic; /* 斜体にして目立たない印象を強める */
+    text-align: right; /* 右寄せにして位置を調整 */
+}
+/* 三角形の矢印アイコン */
+.arrow-top {
+    width: 0;
+    height: 0;
+    border: 30px solid #cc0000;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  .arrow-right {
+    position: absolute;
+    left: -55px;
+    top: 50px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border: 30px solid #f0f0f0;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  .arrow-bottom {
+    width: 0;
+    height: 0;
+    border: 30px solid #00cc00;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+  }
+  .arrow-left {
+    width: 0;
+    height: 0;
+    border: 30px solid #0000cc;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
